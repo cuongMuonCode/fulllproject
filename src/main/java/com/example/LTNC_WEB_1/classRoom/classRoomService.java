@@ -19,6 +19,9 @@ public class classRoomService {
     public classRoom getClassAndCourseId(String courseId,String classId){
         return classRoomRepository.findClassRoomByClassIdAndCourseId(classId,courseId);
     }
+    public classRoom getClass(String classId){
+        return classRoomRepository.findClassRoomByClassId(classId);
+    }
 
     public classRoom createClassRoom(String classId,String courseId,Integer day, Integer shift){
         if(classRoomRepository.findClassRoomByClassIdAndCourseId(classId,courseId)!=null) {

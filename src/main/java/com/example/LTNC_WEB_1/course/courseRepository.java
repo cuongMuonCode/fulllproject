@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface courseRepository extends MongoRepository<course,String> {
     public course findCourseByCourseId(String courseId);
 
-
+    public void deleteCourseByCourseId(String courseId);
 
 }
