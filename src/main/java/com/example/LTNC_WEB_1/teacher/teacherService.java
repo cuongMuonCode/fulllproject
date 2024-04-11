@@ -38,6 +38,7 @@ for(int i=0;i<teacher.getIdClass().size();i++){
             if(tmp.getCourseId().equals(tmp1.getProgress().getCourseId())) break;
         }
         tmp1.getProgress().getCourseGpa().set(ii,mark);
+        //save
 
     }
 }

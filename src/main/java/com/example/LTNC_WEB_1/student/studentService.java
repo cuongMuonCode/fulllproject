@@ -8,6 +8,7 @@ import com.example.LTNC_WEB_1.learning.learningRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,10 @@ public class studentService {
         informationRepository.deleteInformationByInformationId(id);
         tmp.setFaculty(newEmail);
         informationRepository.save(tmp);
+    }
+    public void courseRegister(String courseId ){
+        // goi ham liet ke class cua pdt
+
     }
 
 

@@ -1,4 +1,4 @@
-/*package com.example.LTNC_WEB_1.teacher;
+package com.example.LTNC_WEB_1.teacher;
 import com.example.LTNC_WEB_1.teacher.teacher;
 import com.example.LTNC_WEB_1.teacher.teacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +11,13 @@ import java.util.List;
 public class teacherController {
     private teacherService teacherService;
     @GetMapping("/{classId}/SetMark")
-//public void SetMark(@PathVariable String classId){
-    return teacherService.SetMark();
+    public void SetMark(@PathVariable String classId){
+   teacherService.SetMark();
 }
 
-    @GetMapping("/{studentId}/allGPA")
-    public List<GPA_Course> allCourseWithGPA(@PathVariable Integer studentId){
-        return studentService.showALlGPA(studentId);
+    @GetMapping("/{classId}/printliststudent")
+    public void PrintStudent(@PathVariable String classId){
+         teacherService.PrintStudent(classId);
     }
 
     // update information
@@ -26,4 +26,4 @@ public class teacherController {
         studentService.reName(studentId,"Nguyen Van Teo");
         return getStudent(studentId);
     }
-}*/
+}
