@@ -45,9 +45,9 @@ public class classRoomController {
     }
     //xoa hoc sinh
     @DeleteMapping("/deleteStudent/{studentId}")
-    public void deleteStudent(@PathVariable Integer studentId){
-        informationRepository.deleteInformationByInformationId(studentId);
-        learningRepository.deleteLearningProgressByStudentId(studentId);
+    public student deleteStudent(@PathVariable Integer studentId){
+        classRoomService.deleteStudent(studentId);
+        return studentService.getStudentById(studentId);
     }
     // thay doi thong tin  hoc sinh
     @PutMapping("/updateStudent/{studentId}/{name}/rename")

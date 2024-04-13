@@ -11,6 +11,8 @@ import com.example.LTNC_WEB_1.teacher.teacherRepository;
 import org.springframework.beans.StandardBeanInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +32,17 @@ public class classRoomService {
     public List<classRoom> all(){
         return classRoomRepository.findAll();
     }
-
+    //xoa hoc sinh
+    public void deleteStudent(Integer studentId){
+        informationRepository.deleteInformationByInformationId(studentId);
+        learningRepository.deleteLearningProgressByStudentId(studentId);
+    }
+    //xoa giao vien
+    //tim lop hoc theo courseid va class id
     public classRoom getClassAndCourseId(String courseId,String classId){
         return classRoomRepository.findClassRoomByClassIdAndCourseId(classId,courseId);
     }
+    //tim lop hoc theo classid
     public classRoom getClass(String classId){
         return classRoomRepository.findClassRoomByClassId(classId);
     }
