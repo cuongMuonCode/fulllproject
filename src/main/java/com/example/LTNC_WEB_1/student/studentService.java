@@ -1,5 +1,6 @@
 package com.example.LTNC_WEB_1.student;
 
+import com.example.LTNC_WEB_1.TKB.TKBService;
 import com.example.LTNC_WEB_1.course.courseRepository;
 import com.example.LTNC_WEB_1.information.information;
 import com.example.LTNC_WEB_1.information.informationRepository;
@@ -19,10 +20,12 @@ public class studentService {
     @Autowired
     private learningRepository learningRepository;
     @Autowired
+    private TKBService TKBService;
+    @Autowired
     private courseRepository courseRepository;
     public student getStudentById(Integer id){
         if(learningRepository.findLearningProgressByStudentId(id)==null || informationRepository.findInformationByInformationId(id)==null)System.out.println("No student");
-        return new student(informationRepository.findInformationByInformationId(id),learningRepository.findLearningProgressByStudentId(id));
+        return new student(informationRepository.findInformationByInformationId(id),learningRepository.findLearningProgressByStudentId(id),TKBService.getTKB(id));
     }
     public Double getAverageGPA(Integer id){
         learningProgress tmp=  learningRepository.findLearningProgressByStudentId(id);
@@ -67,10 +70,10 @@ public class studentService {
         tmp.setEmail(newEmail);
         informationRepository.save(tmp);
     }
-    public  void reFaculty(Integer id,String newEmail){
+    public  void reFaculty(Integer id,String newFalcuty){
         information tmp= informationRepository.findInformationByInformationId(id);
         informationRepository.deleteInformationByInformationId(id);
-        tmp.setFaculty(newEmail);
+        tmp.setFaculty(newFalcuty);
         informationRepository.save(tmp);
     }
     public void courseRegister(String courseId ){

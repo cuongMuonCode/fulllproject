@@ -2,12 +2,15 @@ package com.example.LTNC_WEB_1.classRoom;
 
 import com.example.LTNC_WEB_1.information.information;
 import com.example.LTNC_WEB_1.information.informationRepository;
+import com.example.LTNC_WEB_1.information.informationService;
 import com.example.LTNC_WEB_1.learning.learningProgress;
 import com.example.LTNC_WEB_1.learning.learningRepository;
 import com.example.LTNC_WEB_1.student.student;
 import com.example.LTNC_WEB_1.student.studentService;
 import com.example.LTNC_WEB_1.teacher.teacher;
 import com.example.LTNC_WEB_1.teacher.teacherService;
+import com.example.LTNC_WEB_1.teacherDTO.teacherDTO;
+import com.example.LTNC_WEB_1.teacherDTO.teacherDTOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.JstlUtils;
@@ -27,6 +30,10 @@ public class classRoomController {
     private informationRepository informationRepository;
     @Autowired
     private learningRepository learningRepository;
+    @Autowired
+    private teacherDTOService teacherDTOService;
+    @Autowired
+    private informationService informationService;
     /*@GetMapping("/showStudent")
     public List<Integer> getStudentInClass(){
 
@@ -48,13 +55,13 @@ public class classRoomController {
          studentService.reName(studentId,name);
          return studentService.getStudentById(studentId);
     }
-    @PutMapping("/updateStudent/{studentId}/email")
-    public student updateEmailOfStudent(String email , @PathVariable Integer studentId){
+    @PutMapping("/updateStudent/{studentId}/{email}/reemail")
+    public student updateEmailOfStudent( @PathVariable Integer studentId,@PathVariable String email){
         studentService.reEmail(studentId,email);
         return studentService.getStudentById(studentId);
     }
-    @PutMapping("/updateStudent/{studentId}/falcuty")
-    public student updateFalcutyOfStudent(String falcuty , @PathVariable Integer studentId){
+    @PutMapping("/updateStudent/{studentId}/{falcuty}/refalcuty")
+    public student updateFalcutyOfStudent(@PathVariable Integer studentId,@PathVariable String falcuty){
         studentService.reFaculty(studentId,falcuty);
         return studentService.getStudentById(studentId);
     }
@@ -63,21 +70,26 @@ public class classRoomController {
 //
 //
 //    }
+    //tao moi teacher
+    @PostMapping("/createTeacher")
+    public void createTeacher(){
+        classRoomService.createTeacher(200,"Chovy","MSI@qhh.edu.vn","Esport");
+    }
     // thay doi thong tin giao vien
-    @PutMapping("/updateTeacher/{teacherId}/{name}")
-    public teacher updateNameOfTeacher(String name , @PathVariable Integer teacherId){
-        //teacherService.reName(teacherId,name);
-        return teacherService.getTeacherById(teacherId);
+    @PutMapping("/updateTeacher/{teacherId}/{name}/rename")
+    public teacherDTO updateNameOfTeacher( @PathVariable Integer teacherId,@PathVariable String name ){
+        teacherDTOService.reName(teacherId,name);
+        return teacherDTOService.getTeacherById(teacherId);
     }
-    @PutMapping("/updateTeacher/{teacherId}/email")
-    public teacher updateEmailOfTeacher(String email , @PathVariable Integer teacherId){
-        //teacherService.reEmail(teacherId,name);
-        return teacherService.getTeacherById(teacherId);
+    @PutMapping("/updateTeacher/{teacherId}/{email}/reemail")
+    public teacherDTO updateEmailOfTeacher( @PathVariable Integer teacherId,@PathVariable String email ){
+        teacherDTOService.reEmail(teacherId,email);
+        return teacherDTOService.getTeacherById(teacherId);
     }
-    @PutMapping("/updateTeacher/{teacherId}/falcuty")
-    public teacher updateFalcutyOfTeacher(String falcuty , @PathVariable Integer teacherId){
-        //teacherService.reName(teacherId,name);
-        return teacherService.getTeacherById(teacherId);
+    @PutMapping("/updateTeacher/{teacherId}/{falcuty}/refalcuty")
+    public teacherDTO updateFalcutyOfTeacher(@PathVariable Integer teacherId, @PathVariable String falcuty ){
+        teacherDTOService.reFaculty(teacherId,falcuty);
+        return teacherDTOService.getTeacherById(teacherId);
     }
     //CRUD lop hoc
     @GetMapping("/info")
