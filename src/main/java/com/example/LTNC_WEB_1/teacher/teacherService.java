@@ -28,8 +28,10 @@ private learningRepository learningRepository;
     private classRoomService classRoomService;
     @Autowired
     private studentService studentService;
-    /*@Autowired
-    private teacherService teacherService;*/
+    @Autowired
+    private courseService courseService;
+    @Autowired
+    private courseRepository courseRepository;
 
    /* public teacher getTeacherById(Integer id){
         if(informationRepository.findInformationByInformationId(id)==null)
@@ -78,11 +80,18 @@ private learningRepository learningRepository;
             System.out.println(temp.getStudentList().get(i));
         }*/return temp.getStudentList();
 
-    }/*
-    public course UpdateCourse(String courseId,String Book){
-        course tmp1=null;
-        for(int i=0;i<teacher.getIdClass().size();i++){
-            if(classRoomService.getClass(teacher.getIdClass().get(i)).equals(courseId)){
+    }
+    public void UpdateCourse(Integer teacherId, String courseId,String Book){
+        teacher tempTeacher=teacherRepository.findTeacherByInformation(teacherId);
+        boolean tea_in_class=false;
+        for(int i=0;i<tempTeacher.getIdClass().size();i++){
+            if(tempTeacher.getIdCourse().get(i).equals(courseId)){tea_in_class=true;break;}
+        }
+        if(!tea_in_class)return ;
+       // course tmp1=null;
+        /*for(int i=0;i<tempTeacher.getIdClass().size();i++){
+            if(classRoomService.getClass(tempTeacher.getIdClass().get(i)).equals(courseId)&&
+                    classRoomService){
                 classRoom tmp=classRoomService.getClass(teacher.getIdClass().get(i));
                 tmp1= courseService.getCourseById(tmp.getCourseId());
 
@@ -90,9 +99,11 @@ private learningRepository learningRepository;
               }if(tmp1==null){
             System.out.println("No course");
         return null;
-        }
-        tmp1.setRefBook(Book);
+        }*/
+      course  tmp1=courseService.getCourseById(courseId);
+
         courseRepository.deleteCourseByCourseId(courseId);
-        return  courseRepository.save(tmp1);
-    }*/
+        tmp1.setRefBook(Book);
+         courseRepository.save(tmp1);
+    }
 }
