@@ -32,12 +32,6 @@ public class classRoomService {
     public List<classRoom> all(){
         return classRoomRepository.findAll();
     }
-    //xoa hoc sinh
-    public void deleteStudent(Integer studentId){
-        informationRepository.deleteInformationByInformationId(studentId);
-        learningRepository.deleteLearningProgressByStudentId(studentId);
-    }
-    //xoa giao vien
     //tim lop hoc theo courseid va class id
     public classRoom getClassAndCourseId(String courseId,String classId){
         return classRoomRepository.findClassRoomByClassIdAndCourseId(classId,courseId);
@@ -55,22 +49,11 @@ public class classRoomService {
         }
         classRoom newClass = new classRoom(classId,courseId,new ArrayList<>(),day, shift,50);
         //add vo khoa hoc cua teacher
+
+
         return classRoomRepository.save(newClass);
     }
-    //them hoc sinh moi
-    public void createStudent(Integer informationId, String name, String email, String falcuty){
-        information in4= new information(informationId,name,email,falcuty);
-        learningProgress newlP= new learningProgress(informationId,null,null);
-        learningRepository.save(newlP);
-        informationRepository.save(in4);
-    }
-    public void createTeacher(Integer informationId, String name, String email, String falcuty){
-        information in4= new information(informationId,name,email,falcuty);
-        teacher newTeacher=new teacher(informationId,null,null,null);
-        teacherRepository.save(newTeacher);
-        informationRepository.save(in4);
-    }
-    public void addstudent(String classId,Integer studentId){
+    /*public void addStudent(String classId,Integer studentId){
         student temp=studentService.getStudentById(studentId);
         classRoom tmp=classRoomRepository.findClassRoomByClassId(classId);
         for(int i=0;i<temp.getProgress().getCourseGpa().size();i++){
@@ -80,5 +63,5 @@ public class classRoomService {
             classRoomRepository.deleteClassRoomByClassId(classId);
             classRoomRepository.save(tmp);
         }
-    }
+    }*/
 }

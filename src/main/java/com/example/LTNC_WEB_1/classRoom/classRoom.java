@@ -17,5 +17,4 @@ public class classRoom {
     private Integer day;
     private Integer shift;
     private Integer maxStudent;
-
 }

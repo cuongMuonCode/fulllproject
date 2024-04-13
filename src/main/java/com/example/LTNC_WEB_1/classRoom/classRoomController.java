@@ -38,59 +38,6 @@ public class classRoomController {
     public List<Integer> getStudentInClass(){
 
     }*/
-    //tao acc, them hoc sinh
-    @PostMapping("/createStudent")
-    public void createStudent(){
-        classRoomService.createStudent(6,"CP","bonanhphuong@gmail.com","May Tinh");
-    }
-    //xoa hoc sinh
-    @DeleteMapping("/deleteStudent/{studentId}")
-    public student deleteStudent(@PathVariable Integer studentId){
-        classRoomService.deleteStudent(studentId);
-        return studentService.getStudentById(studentId);
-    }
-    // thay doi thong tin  hoc sinh
-    @PutMapping("/updateStudent/{studentId}/{name}/rename")
-    public student updateNameOfStudent( @PathVariable Integer studentId,@PathVariable String name ){
-         studentService.reName(studentId,name);
-         return studentService.getStudentById(studentId);
-    }
-    @PutMapping("/updateStudent/{studentId}/{email}/reemail")
-    public student updateEmailOfStudent( @PathVariable Integer studentId,@PathVariable String email){
-        studentService.reEmail(studentId,email);
-        return studentService.getStudentById(studentId);
-    }
-    @PutMapping("/updateStudent/{studentId}/{falcuty}/refalcuty")
-    public student updateFalcutyOfStudent(@PathVariable Integer studentId,@PathVariable String falcuty){
-        studentService.reFaculty(studentId,falcuty);
-        return studentService.getStudentById(studentId);
-    }
-//    @PutMapping("/updateStudent/{studentId}/email") // viet tiep doi faculty
-//    public student updateEmailOfStudent(@PathVariable Integer studentId,String email){
-//
-//
-//    }
-    //tao moi teacher
-    @PostMapping("/createTeacher")
-    public void createTeacher(){
-        classRoomService.createTeacher(200,"Chovy","MSI@qhh.edu.vn","Esport");
-    }
-    // thay doi thong tin giao vien
-    @PutMapping("/updateTeacher/{teacherId}/{name}/rename")
-    public teacherDTO updateNameOfTeacher( @PathVariable Integer teacherId,@PathVariable String name ){
-        teacherDTOService.reName(teacherId,name);
-        return teacherDTOService.getTeacherById(teacherId);
-    }
-    @PutMapping("/updateTeacher/{teacherId}/{email}/reemail")
-    public teacherDTO updateEmailOfTeacher( @PathVariable Integer teacherId,@PathVariable String email ){
-        teacherDTOService.reEmail(teacherId,email);
-        return teacherDTOService.getTeacherById(teacherId);
-    }
-    @PutMapping("/updateTeacher/{teacherId}/{falcuty}/refalcuty")
-    public teacherDTO updateFalcutyOfTeacher(@PathVariable Integer teacherId, @PathVariable String falcuty ){
-        teacherDTOService.reFaculty(teacherId,falcuty);
-        return teacherDTOService.getTeacherById(teacherId);
-    }
     //CRUD lop hoc
     @GetMapping("/info")
     public classRoom getClassRoom(){ // tim theo courseId va classId
@@ -100,12 +47,6 @@ public class classRoomController {
     @PostMapping("/createClass")
     public classRoom createClassRoom(){
       //  System.out.println("vo day");
-        return classRoomService.createClassRoom("L01","MT2001",2,1);
+        return classRoomService.createClassRoom("L20","MT2010",2,1);
     }
-
-
-
-
-
-
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface teacherRepository extends MongoRepository<teacher,Integer> {
        public  teacher findTeacherByInformation(Integer information);
+       public void deleteTeacherByInformation(Integer information);
 }
