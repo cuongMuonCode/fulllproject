@@ -1,6 +1,7 @@
 package com.example.LTNC_WEB_1.teacher;
 import com.example.LTNC_WEB_1.information.informationRepository;
 import com.example.LTNC_WEB_1.information.informationRepository;
+import com.example.LTNC_WEB_1.learning.learningProgress;
 import com.example.LTNC_WEB_1.student.studentService;
 import com.example.LTNC_WEB_1.student.student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.LTNC_WEB_1.classRoom.classRoom;
 import com.example.LTNC_WEB_1.classRoom.classRoomService;
 import com.example.LTNC_WEB_1.course.courseService;
-import com.example.LTNC_WEB_1.classRoom.classRoomRepository;
+import com.example.LTNC_WEB_1.learning.learningRepository;
 import com.example.LTNC_WEB_1.course.course;
 import java.util.Scanner;
 import com.example.LTNC_WEB_1.course.courseRepository;
@@ -16,49 +17,68 @@ import com.example.LTNC_WEB_1.course.courseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class teacherService {
 
-    private com.example.LTNC_WEB_1.information.informationRepository informationRepository;
+@Autowired
+private learningRepository learningRepository;
+    @Autowired
+    private teacherRepository teacherRepository;
+    @Autowired
     private classRoomService classRoomService;
-    private teacher teacher;
+    @Autowired
     private studentService studentService;
-    private courseService courseService;
-    private courseRepository courseRepository;
-    public void SetMark(){
-for(int i=0;i<teacher.getIdClass().size();i++){
-    classRoom tmp= classRoomService.getClass(teacher.getIdClass().get(i));
-    for(int j=0;j<tmp.getStudentList().size();j++){
-        Scanner sc =new Scanner(System.in);
-        System.out.println(tmp.getStudentList().get(j));
-        System.out.println("Moi nhap diem");
-        student tmp1=studentService.getStudentById(tmp.getStudentList().get(j));
-        double mark=sc.nextDouble();int ii=0;
-        for(;ii<tmp1.getProgress().getCourseId().size();ii++){
-            if(tmp.getCourseId().equals(tmp1.getProgress().getCourseId())) break;
+    /*@Autowired
+    private teacherService teacherService;*/
+
+   /* public teacher getTeacherById(Integer id){
+        if(informationRepository.findInformationByInformationId(id)==null)
+            return new teacher()
+    }*/
+    public teacher getTeacherById(Integer id){
+        return teacherRepository.findTeacherByInformation(id);
+    }
+
+
+    public void SetMark(String courseId,String classId,Integer studentId,Integer teacherId,Double mark){
+       classRoom temp=  classRoomService.getClassAndCourseId(courseId,classId);
+       teacher tempTeacher=teacherRepository.findTeacherByInformation(teacherId);
+       boolean stu_in_class=false;
+       boolean tea_in_class=false;
+       for(int i=0;i<temp.getStudentList().size();i++){
+           if(temp.getStudentList().get(i)==studentId){stu_in_class=true;break;}
+       }
+        for(int i=0;i<tempTeacher.getIdClass().size();i++){
+            if(tempTeacher.getIdCourse().get(i).equals(courseId)&& tempTeacher.getIdClass().get(i).equals(classId)){tea_in_class=true;break;}
         }
-        tmp1.getProgress().getCourseGpa().set(ii,mark);
-        //save
+        if(!(stu_in_class&&tea_in_class))return;
+       student stu=studentService.getStudentById(studentId);int a=-1;
+       for(int i=0;;i++){if(stu.getProgress().getCourseId().get(i).equals(courseId)){a=i;break;}}
+       if(a==-1){System.out.println("khong tim ra mon nay");
+       return;}
+       stu.getProgress().getCourseGpa().set(a,mark);
+        learningProgress tem2=stu.getProgress();
+    learningRepository.deleteLearningProgressByStudentId(studentId);
+        learningRepository.save(tem2);
+
 
     }
-}
+   /* public void SetMark1(String courseId,String classId, Integer studentId){
 
-    }
-    public void SetMark1(String classId, Integer studentId){
-
-    }
-    public void PrintStudent(String ClassId){
-        for(int i=0;i<teacher.getIdClass().size();i++){
-            if(teacher.getIdClass().get(i).equals(ClassId)){
-                classRoom tmp= classRoomService.getClass(teacher.getIdClass().get(i));
-                for(int j=0;j<tmp.getStudentList().size();j++){
-                    System.out.println(tmp.getStudentList().get(j));
-                }
-                break;
-            }
+    }*/
+    public List<Integer> PrintStudent(String ClassId,String courseId,Integer teacherId){
+     teacher tempTeacher=teacherRepository.findTeacherByInformation(teacherId);
+     boolean tea_in_class=false;
+        for(int i=0;i<tempTeacher.getIdClass().size();i++){
+            if(tempTeacher.getIdCourse().get(i).equals(courseId)&& tempTeacher.getIdClass().get(i).equals(ClassId)){tea_in_class=true;break;}
         }
+        if(!tea_in_class)return null;
+        classRoom temp=classRoomService.getClassAndCourseId(courseId,ClassId);
+       /* for(int i=0;i<temp.getStudentList().size();i++){
+            System.out.println(temp.getStudentList().get(i));
+        }*/return temp.getStudentList();
 
-    }
+    }/*
     public course UpdateCourse(String courseId,String Book){
         course tmp1=null;
         for(int i=0;i<teacher.getIdClass().size();i++){
@@ -74,5 +94,5 @@ for(int i=0;i<teacher.getIdClass().size();i++){
         tmp1.setRefBook(Book);
         courseRepository.deleteCourseByCourseId(courseId);
         return  courseRepository.save(tmp1);
-    }
+    }*/
 }

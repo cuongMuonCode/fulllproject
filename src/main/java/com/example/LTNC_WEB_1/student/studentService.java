@@ -77,6 +77,7 @@ public class studentService {
         // goi ham liet ke class cua pdt
 
     }
+    public void SetStuMark(){}
 
 
 }

@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Repository
 public interface learningRepository extends MongoRepository<learningProgress,Integer> {
     public learningProgress findLearningProgressByStudentId(Integer studentId);
-   // public void deletelearningProgressBy(Integer studentId);
+   public void deleteLearningProgressByStudentId(Integer studentId);
 }

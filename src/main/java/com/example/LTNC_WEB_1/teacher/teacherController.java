@@ -3,27 +3,44 @@ import com.example.LTNC_WEB_1.teacher.teacher;
 import com.example.LTNC_WEB_1.teacher.teacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import com.example.LTNC_WEB_1.course.course;
+import com.example.LTNC_WEB_1.course.courseService;
 import java.util.List;
 
 @RestController
 @RequestMapping("/teacher")
 public class teacherController {
+    @Autowired
     private teacherService teacherService;
-    @GetMapping("/{classId}/SetMark")
-    public void SetMark(@PathVariable String classId){
-   teacherService.SetMark();
-}
+    @Autowired
+    private courseService courseService;
 
-    @GetMapping("/{classId}/printliststudent")
+
+    @GetMapping
+            ("/{teacherId}/get")
+    public teacher getTeacher(@PathVariable Integer teacherId){
+        return  teacherService.getTeacherById(teacherId);
+    }
+   /* @GetMapping("/{classId}/printstudent")
     public void PrintStudent(@PathVariable String classId){
          teacherService.PrintStudent(classId);
     }
 
     // update information
-    @PutMapping("/{studentId}/rename")
-    public student updateStudentName(@PathVariable Integer studentId ){
-        studentService.reName(studentId,"Nguyen Van Teo");
-        return getStudent(studentId);
+    @PutMapping("/{courseId}/{Book}/rename")
+    public course UpdateCourse(@PathVariable String courseId,@PathVariable String Book ){
+        teacherService.UpdateCourse(courseId,Book);
+        return courseService.getCourseById(courseId);
+    }*/
+
+    @PutMapping
+            ("/{courseId}/{classId}/{studentId}/{teacherId}/{mark}/setmark")
+    public void setMark(@PathVariable String courseId,@PathVariable String classId,@PathVariable Integer studentId,@PathVariable Integer teacherId,@PathVariable Double mark){
+//        athV
+        teacherService.SetMark(courseId,classId,studentId,teacherId,mark);
+
     }
+    @GetMapping("/{classId}/{courseId}/{teacherId}/printclass")
+    public List<Integer> printclass(@PathVariable String classId,@PathVariable String courseId,@PathVariable Integer teacherId)
+    {return teacherService.PrintStudent(classId,courseId,teacherId);}
 }

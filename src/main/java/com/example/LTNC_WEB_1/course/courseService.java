@@ -9,7 +9,7 @@ public class courseService {
     @Autowired
     private courseRepository courseRepository;
 
-    public course getCourseById( String courseId){
+    public course getCourseById(String courseId){
         if(courseRepository.findCourseByCourseId(courseId)==null)System.out.println("no course with id");
         return courseRepository.findCourseByCourseId(courseId);
     }
