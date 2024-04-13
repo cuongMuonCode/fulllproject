@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 public interface informationRepository extends MongoRepository<information,Integer> {
     public information findInformationByInformationId(Integer id);
     public void deleteInformationByInformationId(Integer id);
-
 }

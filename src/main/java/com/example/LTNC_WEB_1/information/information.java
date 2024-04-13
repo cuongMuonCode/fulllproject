@@ -15,5 +15,4 @@ public class information {
     private String name;
     private String email;
     private String faculty;
-
 }

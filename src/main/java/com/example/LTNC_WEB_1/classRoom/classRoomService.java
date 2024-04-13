@@ -1,5 +1,9 @@
 package com.example.LTNC_WEB_1.classRoom;
 
+import com.example.LTNC_WEB_1.information.information;
+import com.example.LTNC_WEB_1.information.informationRepository;
+import com.example.LTNC_WEB_1.learning.learningProgress;
+import com.example.LTNC_WEB_1.learning.learningRepository;
 import org.springframework.beans.StandardBeanInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +15,10 @@ import java.util.List;
 public class classRoomService {
     @Autowired
     private classRoomRepository classRoomRepository;
-
+    @Autowired
+    private informationRepository informationRepository;
+    @Autowired
+    private learningRepository learningRepository;
     public List<classRoom> all(){
         return classRoomRepository.findAll();
     }
@@ -30,6 +37,14 @@ public class classRoomService {
             return null ;
         }
         classRoom newClass = new classRoom(classId,courseId,new ArrayList<>(),day, shift,50);
+        //add vo khoa hoc cua teacher
         return classRoomRepository.save(newClass);
+    }
+    //them hoc sinh moi
+    public void createStudent(Integer informationId, String name, String email, String falcuty){
+        information in4= new information(informationId,name,email,falcuty);
+        learningProgress newlP= new learningProgress(informationId,null,null);
+        learningRepository.save(newlP);
+        informationRepository.save(in4);
     }
 }
