@@ -17,8 +17,7 @@ public class teacherController {
     private courseService courseService;
 
 
-    @GetMapping
-            ("/{teacherId}/get")
+    @GetMapping("/{teacherId}/get")
     public teacher getTeacher(@PathVariable Integer teacherId){
         return  teacherService.getTeacherById(teacherId);
     }
