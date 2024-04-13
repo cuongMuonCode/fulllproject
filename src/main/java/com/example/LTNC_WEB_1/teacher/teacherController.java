@@ -2,6 +2,7 @@ package com.example.LTNC_WEB_1.teacher;
 import com.example.LTNC_WEB_1.teacher.teacher;
 import com.example.LTNC_WEB_1.teacher.teacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.web.bind.annotation.*;
 import com.example.LTNC_WEB_1.course.course;
 import com.example.LTNC_WEB_1.course.courseService;
@@ -16,8 +17,7 @@ public class teacherController {
     private courseService courseService;
 
 
-    @GetMapping
-            ("/{teacherId}/get")
+    @GetMapping("/{teacherId}/get")
     public teacher getTeacher(@PathVariable Integer teacherId){
         return  teacherService.getTeacherById(teacherId);
     }
@@ -43,4 +43,10 @@ public class teacherController {
     @GetMapping("/{classId}/{courseId}/{teacherId}/printclass")
     public List<Integer> printclass(@PathVariable String classId,@PathVariable String courseId,@PathVariable Integer teacherId)
     {return teacherService.PrintStudent(classId,courseId,teacherId);}
+
+    @PutMapping("/{teacherId}/{courseId}/{Book}/updateCourse")
+    public void updateCourse(@PathVariable Integer teacherId,@PathVariable String courseId,@PathVariable String Book){
+        teacherService.UpdateCourse(teacherId,courseId,Book);
+    }
 }
+
