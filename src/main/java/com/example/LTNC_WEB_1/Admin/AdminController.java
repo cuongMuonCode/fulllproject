@@ -66,11 +66,11 @@ public class AdminController {
         return studentService.getStudentById(studentId).getIn4();
     }
 
-    
-    @PutMapping("/updateStudent/{studentId}/{falcuty}/refalcuty")
-    public student updateFalcutyOfStudent(@PathVariable Integer studentId,@PathVariable String falcuty){
-        studentService.reFaculty(studentId,falcuty);
-        return studentService.getStudentById(studentId);
+
+    @PutMapping("/updateStudent/refalcuty")
+    public information updateFalcutyOfStudent(@RequestParam Integer studentId,@RequestParam String faculty){
+        studentService.reFaculty(studentId,faculty);
+        return studentService.getStudentById(studentId).getIn4();
     }
     //    @PutMapping("/updateStudent/{studentId}/email") // viet tiep doi faculty
 //    public student updateEmailOfStudent(@PathVariable Integer studentId,String email){
@@ -79,30 +79,29 @@ public class AdminController {
 //    }
     //tao moi teacher
     @PostMapping("/createTeacher")
-    public void createTeacher(){
-        AdminService.createTeacher(200,"Chovy","MSI@qhh.edu.vn","Esport");
+    public void createTeacher(@RequestParam Integer id , @RequestParam String name,@RequestParam String email,@RequestParam String faculty){
+        AdminService.createTeacher(id,name,email,faculty);
     }
     //xoa teacher
     @DeleteMapping("/deleteTeacher/{Id}")
-    public teacherDTO deleteTeacher(@PathVariable Integer Id){
-        AdminService.deleteTeacher(Id);
-        return teacherDTOService.getTeacherById(Id);
+    public information deleteTeacher(@PathVariable Integer Id){
+        return AdminService.deleteTeacher(Id);
     }
     // thay doi thong tin giao vien
-    @PutMapping("/updateTeacher/{teacherId}/{name}/rename")
-    public teacherDTO updateNameOfTeacher( @PathVariable Integer teacherId,@PathVariable String name ){
+    @PutMapping("/updateTeacher/rename")
+    public information updateNameOfTeacher( @RequestParam Integer teacherId,@RequestParam String name ){
         teacherDTOService.reName(teacherId,name);
-        return teacherDTOService.getTeacherById(teacherId);
+        return teacherDTOService.getTeacherById(teacherId).getIn4();
     }
-    @PutMapping("/updateTeacher/{teacherId}/{email}/reemail")
-    public teacherDTO updateEmailOfTeacher( @PathVariable Integer teacherId,@PathVariable String email ){
+    @PutMapping("/updateTeacher/reemail")
+    public information updateEmailOfTeacher( @RequestParam Integer teacherId,@RequestParam String email ){
         teacherDTOService.reEmail(teacherId,email);
-        return teacherDTOService.getTeacherById(teacherId);
+        return teacherDTOService.getTeacherById(teacherId).getIn4();
     }
-    @PutMapping("/updateTeacher/{teacherId}/{falcuty}/refalcuty")
-    public teacherDTO updateFalcutyOfTeacher(@PathVariable Integer teacherId, @PathVariable String falcuty ){
+    @PutMapping("/updateTeacher/refalcuty")
+    public information updateFalcutyOfTeacher(@RequestParam Integer teacherId, @RequestParam String falcuty ){
         teacherDTOService.reFaculty(teacherId,falcuty);
-        return teacherDTOService.getTeacherById(teacherId);
+        return teacherDTOService.getTeacherById(teacherId).getIn4();
     }
     //CRUD lop hoc
     @GetMapping("/info")

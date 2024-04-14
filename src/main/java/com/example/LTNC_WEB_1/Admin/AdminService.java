@@ -42,9 +42,9 @@ public class AdminService {
         return informationRepository.deleteInformationByInformationId(studentId);
     }
     //xoa giao vien
-    public void deleteTeacher(Integer Id){
-        informationRepository.deleteInformationByInformationId(Id);
+    public information deleteTeacher(Integer Id){
         teacherRepository.deleteTeacherByInformation(Id);
+        return informationRepository.deleteInformationByInformationId(Id);
     }
     //tim lop hoc theo courseid va class id
     public classRoom getClassAndCourseId(String courseId,String classId){
