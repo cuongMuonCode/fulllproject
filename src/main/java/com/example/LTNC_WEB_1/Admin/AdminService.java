@@ -36,9 +36,10 @@ public class AdminService {
         return classRoomRepository.findAll();
     }
     //xoa hoc sinh
-    public void deleteStudent(Integer studentId){
-        informationRepository.deleteInformationByInformationId(studentId);
+    public information deleteStudent(Integer studentId){
+
         learningRepository.deleteLearningProgressByStudentId(studentId);
+        return informationRepository.deleteInformationByInformationId(studentId);
     }
     //xoa giao vien
     public void deleteTeacher(Integer Id){
@@ -91,4 +92,7 @@ public class AdminService {
             classRoomRepository.save(tmp);
         }
     }
+
+
+
 }

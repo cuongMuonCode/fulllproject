@@ -21,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Admin")
+@CrossOrigin
 public class AdminController {
     @Autowired
     private classRoomService classRoomService;
@@ -44,20 +45,20 @@ public class AdminController {
     }*/
     //tao acc, them hoc sinh
     @PostMapping("/createStudent")
-    public void createStudent(){
-        AdminService.createStudent(6,"CP","bonanhphuong@gmail.com","May Tinh");
+    public void createStudent(@RequestParam Integer id,@RequestParam String name, @RequestParam String email, @RequestParam String faculty){
+        AdminService.createStudent(id ,name,email,faculty);
     }
     //xoa hoc sinh
     @DeleteMapping("/deleteStudent/{studentId}")
-    public student deleteStudent(@PathVariable Integer studentId){
-        AdminService.deleteStudent(studentId);
-        return studentService.getStudentById(studentId);
+    public information deleteStudent(@PathVariable Integer studentId){
+       return AdminService.deleteStudent(studentId);
+       // return studentService.getStudentById(studentId);
     }
     // thay doi thong tin  hoc sinh
-    @PutMapping("/updateStudent/{studentId}/{name}/rename")
-    public student updateNameOfStudent( @PathVariable Integer studentId,@PathVariable String name ){
+    @PutMapping("/updateStudent/{studentId}/rename")
+    public information updateNameOfStudent( @PathVariable Integer studentId,@RequestParam  String name ){
         studentService.reName(studentId,name);
-        return studentService.getStudentById(studentId);
+        return studentService.getStudentById(studentId).getIn4();
     }
     @PutMapping("/updateStudent/{studentId}/{email}/reemail")
     public student updateEmailOfStudent( @PathVariable Integer studentId,@PathVariable String email){

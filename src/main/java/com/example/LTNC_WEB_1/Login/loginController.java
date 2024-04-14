@@ -14,8 +14,9 @@ public class loginController {
     private loginService loginService;
 
     @GetMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestParam Integer yourId, @RequestParam String passWord) {
-        Boolean result = loginService.isExists(yourId, passWord);
+    public ResponseEntity<Boolean> login(@RequestParam Integer studentId, @RequestParam String passWord) {
+
+        Boolean result = loginService.isExists(studentId, passWord);
         return ResponseEntity.ok(result);
     }
 

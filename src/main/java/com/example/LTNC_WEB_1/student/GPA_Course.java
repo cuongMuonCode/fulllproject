@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class GPA_Course {
     private String courseName;
     private Integer credits;
-    private Double GPA;
+    private Double Gpa;
 }
