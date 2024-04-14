@@ -55,16 +55,18 @@ public class AdminController {
        // return studentService.getStudentById(studentId);
     }
     // thay doi thong tin  hoc sinh
-    @PutMapping("/updateStudent/{studentId}/rename")
-    public information updateNameOfStudent( @PathVariable Integer studentId,@RequestParam  String name ){
+    @PutMapping("/updateStudent/rename")
+    public information updateNameOfStudent( @RequestParam Integer studentId,@RequestParam  String name ){
         studentService.reName(studentId,name);
         return studentService.getStudentById(studentId).getIn4();
     }
-    @PutMapping("/updateStudent/{studentId}/{email}/reemail")
-    public student updateEmailOfStudent( @PathVariable Integer studentId,@PathVariable String email){
+    @PutMapping("/updateStudent/reemail")
+    public information updateEmailOfStudent( @RequestParam Integer studentId,@RequestParam String email){
         studentService.reEmail(studentId,email);
-        return studentService.getStudentById(studentId);
+        return studentService.getStudentById(studentId).getIn4();
     }
+
+    
     @PutMapping("/updateStudent/{studentId}/{falcuty}/refalcuty")
     public student updateFalcutyOfStudent(@PathVariable Integer studentId,@PathVariable String falcuty){
         studentService.reFaculty(studentId,falcuty);
