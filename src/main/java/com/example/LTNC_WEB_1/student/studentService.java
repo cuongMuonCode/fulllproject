@@ -1,6 +1,7 @@
 package com.example.LTNC_WEB_1.student;
 
 import com.example.LTNC_WEB_1.TKB.TKBService;
+import com.example.LTNC_WEB_1.classRoom.classRoom;
 import com.example.LTNC_WEB_1.course.courseRepository;
 import com.example.LTNC_WEB_1.information.information;
 import com.example.LTNC_WEB_1.information.informationRepository;
@@ -8,11 +9,11 @@ import com.example.LTNC_WEB_1.learning.learningProgress;
 import com.example.LTNC_WEB_1.learning.learningRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
+import com.example.LTNC_WEB_1.TKB.TKB;
+import com.example.LTNC_WEB_1.TKB.TKBRepository;
 import java.util.ArrayList;
 import java.util.List;
-
+import com.example.LTNC_WEB_1.classRoom.classRoomRepository;
 @Service
 public class studentService {
     @Autowired
@@ -23,6 +24,11 @@ public class studentService {
     private TKBService TKBService;
     @Autowired
     private courseRepository courseRepository;
+    @Autowired
+    private classRoomRepository classRoomRepository;
+    @Autowired
+    private TKBRepository TKBRepository;
+
     public student getStudentById(Integer id){
         if(learningRepository.findLearningProgressByStudentId(id)==null || informationRepository.findInformationByInformationId(id)==null)System.out.println("No student");
         return new student(informationRepository.findInformationByInformationId(id),learningRepository.findLearningProgressByStudentId(id),TKBService.getTKB(id));
@@ -76,11 +82,55 @@ public class studentService {
         tmp.setFaculty(newFalcuty);
         informationRepository.save(tmp);
     }
-    public void courseRegister(String courseId ){
+    public void courseRegister(String classId,Integer id ){
         // goi ham liet ke class cua pdt
+        classRoom temp=classRoomRepository.findClassRoomByClassId(classId);
+        if(temp==null){System.out.println(classId);System.out.println("Khong co lop nay");return;}
+        learningProgress tmp=learningRepository.findLearningProgressByStudentId(id);
+        TKB time= TKBService.getTKB(id);
+        if(temp.getHaveTeacher()==false){System.out.println("Lop nay chua co giao vien");return;}
+        boolean firsttime=true;
+//bien bool
+        for(int i=0;i<learningRepository.findLearningProgressByStudentId(id).getCourseGpa().size();i++){
+            if(tmp.getCourseId().get(i).equals(temp.getCourseId())){
+                firsttime=false;
+                //diem >100 tuc dang hoc return
+                if(tmp.getCourseGpa().get(i)>=100.0){System.out.println("Mon nay dang hoc");return;}
+                //trung lich hoc return
+                if(!(time.getCa1().get(temp.getDay()-1).equals("null"))&&temp.getShift()==1){System.out.println("Trung lich");return;}
+                if(!(time.getCa2().get(temp.getDay()-1).equals("null"))&&temp.getShift()==2){System.out.println("Trung lich");return;}
+                if(tmp.getCourseGpa().get(i)<100.0)tmp.getCourseGpa().set(i,100.0+tmp.getCourseGpa().get(i));
+            }
+        }
+        if(firsttime){
+            tmp.getCourseId().add(temp.getCourseId());
+            tmp.getCourseGpa().add(11.0);//diem 11 hoc lan dau, chua co diem
+            //add mon moi
+            learningRepository.deleteLearningProgressByStudentId(id);
+            learningRepository.save(tmp);
+        }//hell
+        temp.getStudentList().add(id);
+        classRoomRepository.deleteClassRoomByClassId(classId);
+        classRoomRepository.save(temp);
+        if(time.getCa1().get(temp.getDay()-1).equals("null")&&temp.getShift()==1){
+// setHaveteacher
+
+            TKBRepository.deleteTKBByPersonId(id);
+            time.getCa1().set(temp.getDay()-1,classId);
+            TKBRepository.save(time);
+
+
+        }else
+        if(time.getCa2().get(temp.getDay()-1).equals("null")&&temp.getShift()==2){
+
+
+            TKBRepository.deleteTKBByPersonId(id);
+            time.getCa2().set(temp.getDay()-1,classId);
+            TKBRepository.save(time);
+
+        }
 
     }
-    public void SetStuMark(){}
 
 
 }

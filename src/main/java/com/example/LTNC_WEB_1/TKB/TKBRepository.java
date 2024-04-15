@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TKBRepository extends MongoRepository<TKB,Integer> {
-    public  TKB findTKBById(Integer Id);
-    public void deleteTKBById(Integer Id);
+    public  TKB findTKBByPersonId(Integer Id);
+    public void deleteTKBByPersonId(Integer Id);
 }

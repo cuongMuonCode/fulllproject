@@ -53,7 +53,10 @@ public class teacherController {
 
     // testing delete teacher
 
-
+    @PutMapping("/{id}/{classId}/teacherRegister")
+    public void teacherRegister(@PathVariable Integer id,@PathVariable String classId){
+        teacherService.teacherCourseRegister(id, classId);
+    }
 
 
 }

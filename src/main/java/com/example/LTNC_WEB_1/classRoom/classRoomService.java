@@ -47,7 +47,8 @@ public class classRoomService {
             System.out.println("da ton tai lop hoc nay");
             return null ;
         }
-        classRoom newClass = new classRoom(classId,courseId,new ArrayList<>(),day, shift,50);
+
+        classRoom newClass = new classRoom(classId,courseId,new ArrayList<>(),day, shift,50,false);
         //add vo khoa hoc cua teacher
 
 

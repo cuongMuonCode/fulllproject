@@ -40,26 +40,10 @@ public class studentController {
         return studentService.showALlGPA(studentId);
     }
 
-    // update information
-//    @PutMapping("/{studentId}/rename")
-//    public  student updateStudentName(@PathVariable Integer studentId ){
-//        studentService.reName(studentId,"Nguyen Van Teo");
-//        return getStudent(studentId);
-//    }
-//
-//    @PutMapping("/{studentId}/reEmail")
-//    public student updateStudentEmail(@PathVariable Integer studentId){
-//        studentService.reEmail(studentId,"new email");
-//        return getStudent(studentId);
-//    }
-//    @PutMapping("/{studentId}/reFaculty")
-//    public student updateStudentFaculty(@PathVariable Integer studentId){
-//        studentService.reName(studentId,"new fal");
-//        return getStudent(studentId);
-//    }
-    // change
-    // change12
-
+    @PutMapping("/{classId}/{id}/courseRegister")
+    public void Register(@PathVariable String classId,@PathVariable Integer id){
+        studentService.courseRegister(classId,id);
+    }
 
 
 }

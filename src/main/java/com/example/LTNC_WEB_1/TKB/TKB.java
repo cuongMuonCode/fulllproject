@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Document(collection = "TKB")
 public class TKB {
-    private Integer id;
+    private Integer personId;
     private List<String> ca1;
     private List<String> ca2;
 

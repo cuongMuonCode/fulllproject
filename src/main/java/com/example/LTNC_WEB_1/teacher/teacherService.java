@@ -1,4 +1,5 @@
 package com.example.LTNC_WEB_1.teacher;
+import com.example.LTNC_WEB_1.TKB.TKBRepository;
 import com.example.LTNC_WEB_1.information.informationRepository;
 import com.example.LTNC_WEB_1.information.informationRepository;
 import com.example.LTNC_WEB_1.learning.learningProgress;
@@ -13,7 +14,8 @@ import com.example.LTNC_WEB_1.learning.learningRepository;
 import com.example.LTNC_WEB_1.course.course;
 import java.util.Scanner;
 import com.example.LTNC_WEB_1.course.courseRepository;
-
+import com.example.LTNC_WEB_1.TKB.TKB;
+import com.example.LTNC_WEB_1.classRoom.classRoomRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,10 @@ private learningRepository learningRepository;
     private courseService courseService;
     @Autowired
     private courseRepository courseRepository;
+    @Autowired
+    private TKBRepository TKBRepository;
+    @Autowired
+    private classRoomRepository classRoomRepository;
 
    /* public teacher getTeacherById(Integer id){
         if(informationRepository.findInformationByInformationId(id)==null)
@@ -105,5 +111,43 @@ private learningRepository learningRepository;
         courseRepository.deleteCourseByCourseId(courseId);
         tmp1.setRefBook(Book);
          courseRepository.save(tmp1);
+    }
+    public void teacherCourseRegister(Integer id,String classId){
+        classRoom Class=classRoomService.getClass(classId);
+        teacher temp=teacherRepository.findTeacherByInformation(id);
+        TKB time= TKBRepository.findTKBByPersonId(id);
+        if(temp==null||Class.getHaveTeacher())return;
+        for(int i=0;i<temp.getDiploma().size();i++){
+            if(temp.getDiploma().get(i).equals(Class.getCourseId())){
+                if(time.getCa1().get(Class.getDay()-1).equals("null")&&Class.getShift()==1){
+// setHaveteacher
+                    Class.setHaveTeacher(true);
+                    classRoomRepository.deleteClassRoomByClassId(classId);
+                    classRoomRepository.save(Class);
+                    TKBRepository.deleteTKBByPersonId(id);
+                    time.getCa1().set(Class.getDay()-1,classId);
+                    TKBRepository.save(time);
+                    temp.getIdClass().add(classId);
+                    temp.getIdCourse().add(Class.getCourseId());
+                    teacherRepository.deleteTeacherByInformation(id);
+                    teacherRepository.save(temp);
+
+                }else
+                if(time.getCa2().get(Class.getDay()-1).equals("null")&&Class.getShift()==2){
+                    Class.setHaveTeacher(true);
+                    classRoomRepository.deleteClassRoomByClassId(classId);
+                    classRoomRepository.save(Class);
+
+                    TKBRepository.deleteTKBByPersonId(id);
+                    time.getCa2().set(Class.getDay()-1,classId);
+                    TKBRepository.save(time);
+                    temp.getIdClass().add(classId);
+                    temp.getIdCourse().add(Class.getCourseId());
+                    teacherRepository.deleteTeacherByInformation(id);
+                    teacherRepository.save(temp);
+                }break;
+            }
+
+        }
     }
 }

@@ -15,7 +15,7 @@ public class TKBService {
     classRoomRepository classRoomRepository;
 
     public TKB getTKB(Integer id){
-        return TKBRepository.findTKBById(id);
+        return TKBRepository.findTKBByPersonId(id);
     }
 //    public void updateTKB (String classId,Integer id){
 //        classRoom tmp=classRoomRepository.findClassRoomByClassId(classId);
