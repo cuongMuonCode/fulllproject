@@ -30,7 +30,6 @@ public class studentController {
         return informationService.getInformationById(studentId);
     }
 
-
     @GetMapping("/{studentId}/AVG")
     public Double getAvgGPA(@PathVariable Integer studentId){
         return studentService.getAverageGPA(studentId);

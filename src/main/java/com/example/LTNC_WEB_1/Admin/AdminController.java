@@ -10,6 +10,7 @@ import com.example.LTNC_WEB_1.learning.learningRepository;
 import com.example.LTNC_WEB_1.student.student;
 import com.example.LTNC_WEB_1.student.studentService;
 import com.example.LTNC_WEB_1.teacher.teacher;
+import com.example.LTNC_WEB_1.teacher.teacherRepository;
 import com.example.LTNC_WEB_1.teacher.teacherService;
 import com.example.LTNC_WEB_1.teacherDTO.teacherDTO;
 import com.example.LTNC_WEB_1.teacherDTO.teacherDTOService;
@@ -39,6 +40,9 @@ public class AdminController {
     private informationService informationService;
     @Autowired
     private AdminService AdminService;
+    @Autowired
+    private teacherRepository teacherRepository;
+
     /*@GetMapping("/showStudent")
     public List<Integer> getStudentInClass(){
 
@@ -99,20 +103,24 @@ public class AdminController {
         return teacherDTOService.getTeacherById(teacherId).getIn4();
     }
     @PutMapping("/updateTeacher/refalcuty")
-    public information updateFalcutyOfTeacher(@RequestParam Integer teacherId, @RequestParam String falcuty ){
-        teacherDTOService.reFaculty(teacherId,falcuty);
+    public information updateFalcutyOfTeacher(@RequestParam Integer teacherId, @RequestParam String faculty ){
+        teacherDTOService.reFaculty(teacherId,faculty);
         return teacherDTOService.getTeacherById(teacherId).getIn4();
     }
     //CRUD lop hoc
-    @GetMapping("/info")
-    public classRoom getClassRoom(){ // tim theo courseId va classId
-        return AdminService.getClassAndCourseId("MT2001","L02");
+    @GetMapping("/getClassRoom")
+    public classRoom getClassRoom(@RequestParam String courseId,@RequestParam String classId){ // tim theo courseId va classId
+        return AdminService.getClassAndCourseId(courseId,classId);
     }
 
     @PostMapping("/createClass")
-    public classRoom createClassRoom(){
+    public classRoom createClassRoom(@RequestParam String classId,@RequestParam String courseId,@RequestParam Integer day,@RequestParam Integer shift){
         //  System.out.println("vo day");
-        return AdminService.createClassRoom("L50","MT2010",2,1);
+        return AdminService.createClassRoom(classId,courseId,day,shift);
     }
     //them hoc sinh vao lop hoc
+//    @DeleteMapping("/deleted")
+//    public void deleteTeach()  {
+//        teacherRepository.deleteTeacherByInformation(44444);
+//    }
 }

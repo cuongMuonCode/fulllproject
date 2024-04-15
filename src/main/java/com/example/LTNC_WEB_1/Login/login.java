@@ -12,4 +12,5 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class login {
     private Integer yourId;
     private String passWord;
+    private Integer role;
 }

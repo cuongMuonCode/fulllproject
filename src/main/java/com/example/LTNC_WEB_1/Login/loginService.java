@@ -9,8 +9,10 @@ public class loginService {
     @Autowired
     private loginRepository loginRepository;
 
-    public Boolean isExists(Integer id, String pass){
+    public Boolean isExists(Integer id, String pass , Integer Role){
         login tmp = loginRepository.findLoginByYourIdAndPassWord(id,pass);
-        return tmp != null;
+        if(tmp!=null && tmp.getRole().equals(Role))return true;
+        return false;
+
     }
 }

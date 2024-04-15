@@ -16,8 +16,10 @@ public class teacherController {
     @Autowired
     private courseService courseService;
 
+    @Autowired
+    private teacherRepository teacherRepository;
 
-    @GetMapping("/{teacherId}/get")
+    @GetMapping("/get/{teacherId}")
     public teacher getTeacher(@PathVariable Integer teacherId){
         return  teacherService.getTeacherById(teacherId);
     }
@@ -33,8 +35,7 @@ public class teacherController {
         return courseService.getCourseById(courseId);
     }*/
 
-    @PutMapping
-            ("/{courseId}/{classId}/{studentId}/{teacherId}/{mark}/setmark")
+    @PutMapping("/{courseId}/{classId}/{studentId}/{teacherId}/{mark}/setmark")
     public void setMark(@PathVariable String courseId,@PathVariable String classId,@PathVariable Integer studentId,@PathVariable Integer teacherId,@PathVariable Double mark){
 //        athV
         teacherService.SetMark(courseId,classId,studentId,teacherId,mark);
@@ -48,5 +49,12 @@ public class teacherController {
     public void updateCourse(@PathVariable Integer teacherId,@PathVariable String courseId,@PathVariable String Book){
         teacherService.UpdateCourse(teacherId,courseId,Book);
     }
+
+
+    // testing delete teacher
+
+
+
+
 }
 
